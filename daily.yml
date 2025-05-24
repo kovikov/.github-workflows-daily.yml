@@ -1,0 +1,29 @@
+name: Run Send Email Script
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Uncomment and edit the next line if you have a requirements.txt
+          # pip install -r arrears_automation/requirements.txt
+
+      - name: Run send_email.py
+        run: python arrears_automation/send_email.py
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
